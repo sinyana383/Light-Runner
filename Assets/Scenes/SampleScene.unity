@@ -522,13 +522,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb25bb8f8dbfb74484de4fbd9b57cb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundPrefab: {fileID: 2422835888761059165, guid: 980b7d07bcd36bc4d883c861c9bd3cbd, type: 3}
+  presentGrounds: []
+  tilesInGround: 100
+  onStartGrounds: 6
   tilesPrefabs:
-  - {fileID: 2468444922023145218, guid: bd099a8d01db08f4eacc7ba687491f86, type: 3}
-  - {fileID: 227019767680275624, guid: 0136d6adfcf7e984fb9566851b73f052, type: 3}
-  - {fileID: 5849143742548770545, guid: 311d26864a59341488186be17aad741e, type: 3}
-  presentTiles: []
-  tileLength: 100
-  onStartTiles: 6
+  - {fileID: 2757465107040488901, guid: a36a7ff074627154cb0a2a6567f4ddb8, type: 3}
+  - {fileID: 7430523474731809294, guid: f5d1b7c9da854c5438ed6b128c99e896, type: 3}
+  - {fileID: 1138144114665486963, guid: 8b32b0abd1925ac439709474bf47d809, type: 3}
+  tileLength: 10
   player: {fileID: 332649332}
 --- !u!4 &1893377297
 Transform:
