@@ -9,7 +9,7 @@ public class TileGenerator : MonoBehaviour
     [SerializeField] private List<GameObject> presentGrounds = new List<GameObject>();
     [SerializeField] private float tilesInGround = 50;
     [SerializeField] private int onStartGrounds = 6;
-    private float spawnPos = 0;
+    private float spawnPos;
     
     [SerializeField] private GameObject[] tilesPrefabs;
     // TODO: Auto-recognize length
@@ -19,6 +19,7 @@ public class TileGenerator : MonoBehaviour
     [SerializeField] private Transform player;
     void Start()
     {
+        spawnPos = -(tilesInGround * tileLength) / 2;
         for (int i = 0; i < onStartGrounds; ++i)
         {
             SpawnGround(Random.Range(0, tilesPrefabs.Length));
@@ -27,7 +28,7 @@ public class TileGenerator : MonoBehaviour
     
     void Update()
     {
-        if (player.position.z - tilesInGround * tileLength > spawnPos - (onStartGrounds * tilesInGround * tileLength))
+        if (player.position.z - tilesInGround * tileLength * 1.5f > spawnPos - (onStartGrounds * tilesInGround * tileLength))
         {
             SpawnGround(Random.Range(0, tilesPrefabs.Length));
             DeleteAndDestroyTile();
