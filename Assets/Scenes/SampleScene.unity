@@ -527,9 +527,7 @@ MonoBehaviour:
   tilesInGround: 100
   onStartGrounds: 6
   tilesPrefabs:
-  - {fileID: 2757465107040488901, guid: a36a7ff074627154cb0a2a6567f4ddb8, type: 3}
-  - {fileID: 7430523474731809294, guid: f5d1b7c9da854c5438ed6b128c99e896, type: 3}
-  - {fileID: 1138144114665486963, guid: 8b32b0abd1925ac439709474bf47d809, type: 3}
+  - {fileID: 4634294585377131875, guid: 8b32b0abd1925ac439709474bf47d809, type: 3}
   tileLength: 10
   player: {fileID: 332649332}
 --- !u!4 &1893377297
