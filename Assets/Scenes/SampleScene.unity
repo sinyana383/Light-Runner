@@ -530,6 +530,7 @@ MonoBehaviour:
   - {fileID: 4634294585377131875, guid: 8b32b0abd1925ac439709474bf47d809, type: 3}
   tileLength: 10
   player: {fileID: 332649332}
+  obstaclePrefab: {fileID: 0}
 --- !u!4 &1893377297
 Transform:
   m_ObjectHideFlags: 0

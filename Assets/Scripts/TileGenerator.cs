@@ -12,10 +12,11 @@ public class TileGenerator : MonoBehaviour
     private float spawnPos;
     
     [SerializeField] private GameObject[] tilesPrefabs;
-    // TODO: Auto-recognize length
     [SerializeField] private float tileLength;
 
     [SerializeField] private Transform player;
+    
+    [SerializeField] private GameObject obstaclePrefab;
     void Start()
     {
         tileLength = tilesPrefabs[0].transform.localScale.z;
@@ -63,7 +64,17 @@ public class TileGenerator : MonoBehaviour
         GameObject leftTile = Instantiate(tilesPrefabs[tileIndex], new Vector3(-tileLength, 0, posZ), transform.rotation, row.transform);
         GameObject rightTile = Instantiate(tilesPrefabs[tileIndex], new Vector3(tileLength, 0, posZ), transform.rotation, row.transform);
         
+        if (Random.Range(0, 1f) < 0.2f)
+            SpawnObstacles(posZ, row);
+        
         return row;
+    }
+
+    private void SpawnObstacles(float posZ, GameObject row)
+    {
+        int pos = Random.Range(-1, 1 + 1);
+        
+        GameObject obstacle = Instantiate(obstaclePrefab, new Vector3(tileLength * pos, 0, posZ), transform.rotation, row.transform);
     }
 
     private void DeleteAndDestroyTile()
