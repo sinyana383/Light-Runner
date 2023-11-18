@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
         
         targetLight.range = newRange;
         OnLightRangeChanged?.Invoke(newRange);
-        if (targetLight.range == 0)
+        if (targetLight.range < 10)
         {
             emissionMaterial.SetColor("_EmissionColor", Color.black);
             penalsManager.OnGameOver();
