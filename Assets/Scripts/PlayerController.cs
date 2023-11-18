@@ -9,7 +9,7 @@ enum Lines
 }
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private PenalsManager penalsManager;
+    [SerializeField] private GameManager penalsManager;
 
     private CharacterController controller;
     private Vector3 direction;

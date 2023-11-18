@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class PenalsManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     static public bool IsPaused;
     [SerializeField] private GameObject startMenu;
@@ -14,10 +14,31 @@ public class PenalsManager : MonoBehaviour
     [SerializeField] private TMP_Text score;
     [SerializeField] private TMP_Text record;
     
+    [SerializeField] private int recordInt = 0;
     // Start is called before the first frame update
     void Start()
     {
-        PauseGame(startMenu);
+        if (!PlayerPrefs.HasKey("Record"))
+        {
+            PlayerPrefs.SetInt("Record", 0);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            recordInt = PlayerPrefs.GetInt("Record");
+            record.text = recordInt.ToString();
+        }
+        
+        if (!PlayerPrefs.HasKey("NeedStartMenu"))
+        {
+            PlayerPrefs.SetInt("NeedStartMenu", 1);
+            PlayerPrefs.Save();
+        }
+        
+        if (PlayerPrefs.GetInt("NeedStartMenu") == 1)
+            PauseGame(startMenu);
+        else
+            Time.timeScale = 1f;
     }
 
     public void PauseGame(GameObject penal)
@@ -36,6 +57,10 @@ public class PenalsManager : MonoBehaviour
 
     public void Restart(bool startWithMenu)
     {
+        int needStartMenu = startWithMenu ? 1 : 0;
+        
+        PlayerPrefs.SetInt("NeedStartMenu", needStartMenu);
+        PlayerPrefs.Save();
         SceneManager.LoadScene(0);
     }
 
@@ -46,12 +71,13 @@ public class PenalsManager : MonoBehaviour
 
         score.text = scoreComp.score.ToString();
         record.color = Color.white;
-        if (int.TryParse(record.text, out var recordNum) &&
-            recordNum < scoreComp.score)
+        if (recordInt < scoreComp.score)
         {
             record.text = score.text;
             record.color = Color.yellow;
+            
+            PlayerPrefs.SetInt("Record", scoreComp.score);
+            PlayerPrefs.Save();
         }
-        // save results
     }
 }
