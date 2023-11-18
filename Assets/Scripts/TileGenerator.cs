@@ -11,7 +11,7 @@ public class TileGenerator : MonoBehaviour
     [SerializeField] private int onStartGrounds = 5;
     private float spawnPos;
     
-    [SerializeField] private GameObject[] tilesPrefabs;
+    [SerializeField] private GameObject[] tilePrefabs;
     [SerializeField] private float tileLength;
 
     [SerializeField] private Transform player;
@@ -24,13 +24,13 @@ public class TileGenerator : MonoBehaviour
     [SerializeField] private GameObject torchPrefab;
     void Start()
     {
-        tileLength = tilesPrefabs[0].transform.localScale.z;
+        tileLength = tilePrefabs[0].transform.localScale.z;
         
         spawnPos = -(tilesInGround * tileLength) / 2;
         SpawnNoObstaclesGround();
         for (int i = 0; i < onStartGrounds; ++i)
         {
-            SpawnGround(Random.Range(0, tilesPrefabs.Length));
+            SpawnGround(Random.Range(0, tilePrefabs.Length));
         }
     }
 
@@ -52,13 +52,13 @@ public class TileGenerator : MonoBehaviour
     {
         if (player.position.z - tilesInGround * tileLength * 1.5f > spawnPos - (onStartGrounds * tilesInGround * tileLength))
         {
-            SpawnGround(Random.Range(0, tilesPrefabs.Length));
+            SpawnGround(Random.Range(0, tilePrefabs.Length));
             DeleteAndDestroyTile();
         }
 
     }
 
-    // TODO: Optimize, if have time!!!
+    
     private void SpawnGround(int tileIndex)
     {
         GameObject newGround = Instantiate(groundPrefab, Vector3.forward * spawnPos, transform.rotation);
@@ -112,11 +112,11 @@ public class TileGenerator : MonoBehaviour
         row.transform.rotation = transform.rotation;
 
         if (obstaclePos != 0)
-            Instantiate(tilesPrefabs[tileIndex], new Vector3(0, 0, posZ), transform.rotation, row.transform);
+            Instantiate(tilePrefabs[tileIndex], new Vector3(0, 0, posZ), transform.rotation, row.transform);
         if (obstaclePos != -1)
-            Instantiate(tilesPrefabs[tileIndex], new Vector3(-tileLength, 0, posZ), transform.rotation, row.transform);
+            Instantiate(tilePrefabs[tileIndex], new Vector3(-tileLength, 0, posZ), transform.rotation, row.transform);
         if (obstaclePos != 1)
-            Instantiate(tilesPrefabs[tileIndex], new Vector3(tileLength, 0, posZ), transform.rotation, row.transform);
+            Instantiate(tilePrefabs[tileIndex], new Vector3(tileLength, 0, posZ), transform.rotation, row.transform);
 
         if (Random.Range(0, 1f) < 0.05f)
             Instantiate(torchPrefab, new Vector3(tileLength * Random.Range(-1, 1 + 1), 2, posZ), transform.rotation,
