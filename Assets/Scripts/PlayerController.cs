@@ -17,7 +17,9 @@ public class PlayerController : MonoBehaviour
 
     private int curLine = (int)Lines.Middle;
     [SerializeField] private float distBetweenLines;
-    
+
+    [SerializeField] private Light targetLight;
+    [SerializeField] private float maxLightRange = 60;
     // Start is called before the first frame update
     void Start()
     {
@@ -71,5 +73,12 @@ public class PlayerController : MonoBehaviour
         direction.z = speed;
         direction.y += gravity * Time.fixedDeltaTime;
         var flags = controller.Move(direction * Time.fixedDeltaTime);
+    }
+
+    public void Collect(float range)
+    {
+        float newRange = Mathf.Clamp(targetLight.range + range, 0, maxLightRange);
+
+        targetLight.range = newRange;
     }
 }

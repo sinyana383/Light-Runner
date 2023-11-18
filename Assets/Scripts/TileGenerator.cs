@@ -20,6 +20,8 @@ public class TileGenerator : MonoBehaviour
     [SerializeField] private GameObject downStartObstaclePrefab;
     [SerializeField] private GameObject downFinishObstaclePrefab;
     [SerializeField] private int lastDownObstaclePos;
+
+    [SerializeField] private GameObject torchPrefab;
     void Start()
     {
         tileLength = tilesPrefabs[0].transform.localScale.z;
@@ -118,7 +120,11 @@ public class TileGenerator : MonoBehaviour
     {
         int pos = prevPos < -1 || prevPos > 1? Random.Range(-1, 1 + 1) : prevPos;
         
-        Instantiate(upObstaclePrefab, new Vector3(tileLength * pos, 3f, posZ), transform.rotation, parent.transform);
+        var obstacle = Instantiate(upObstaclePrefab, new Vector3(tileLength * pos, 3f, posZ), transform.rotation, parent.transform);
+        
+        if(Random.Range(0, 1f) < 0.1f)
+            Instantiate(torchPrefab, new Vector3(tileLength * pos, 7f, posZ), transform.rotation, obstacle.transform);
+
         return pos;
     }
 
