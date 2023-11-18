@@ -42,11 +42,20 @@ public class TileGenerator : MonoBehaviour
     private void SpawnGround(int tileIndex)
     {
         GameObject newGround = Instantiate(groundPrefab, Vector3.forward * spawnPos, transform.rotation);
+        bool wasFirst = false;
+        int prevPos = -2;
         for (int i = 0; i < tilesInGround; i++)
         {
             var tilePosition = Vector3.forward * spawnPos + new Vector3(0, 0, i * tileLength);
-            GameObject newTile = SpawnRaw(tilePosition.z, tileIndex);
-            newTile.transform.SetParent(newGround.transform);
+            GameObject newRow = SpawnRaw(tilePosition.z, tileIndex);
+            if (Random.Range(0, 1f) < 0.2f || wasFirst)
+            {
+                prevPos = SpawnObstacles(tilePosition.z, newRow, prevPos);
+                wasFirst = !wasFirst;
+                if (!wasFirst)
+                    prevPos = -2;
+            }
+            newRow.transform.SetParent(newGround.transform);
         }
         presentGrounds.Add(newGround);
         
@@ -63,18 +72,16 @@ public class TileGenerator : MonoBehaviour
         GameObject middleTile = Instantiate(tilesPrefabs[tileIndex], new Vector3(0, 0, posZ), transform.rotation, row.transform);
         GameObject leftTile = Instantiate(tilesPrefabs[tileIndex], new Vector3(-tileLength, 0, posZ), transform.rotation, row.transform);
         GameObject rightTile = Instantiate(tilesPrefabs[tileIndex], new Vector3(tileLength, 0, posZ), transform.rotation, row.transform);
-        
-        if (Random.Range(0, 1f) < 0.2f)
-            SpawnObstacles(posZ, row);
-        
+
         return row;
     }
 
-    private void SpawnObstacles(float posZ, GameObject row)
+    private int SpawnObstacles(float posZ, GameObject parent, int prevPos = -2)
     {
-        int pos = Random.Range(-1, 1 + 1);
+        int pos = prevPos < -1 || prevPos > 1? Random.Range(-1, 1 + 1) : prevPos;
         
-        GameObject obstacle = Instantiate(obstaclePrefab, new Vector3(tileLength * pos, 4f, posZ), transform.rotation, row.transform);
+        GameObject obstacle1 = Instantiate(obstaclePrefab, new Vector3(tileLength * pos, 3f, posZ), transform.rotation, parent.transform);
+        return pos;
     }
 
     private void DeleteAndDestroyTile()

@@ -71,19 +71,5 @@ public class PlayerController : MonoBehaviour
         direction.z = speed;
         direction.y += gravity * Time.fixedDeltaTime;
         var flags = controller.Move(direction * Time.fixedDeltaTime);
-        if ((flags & CollisionFlags.Sides) != 0)
-        {
-            Debug.Log("Collided with sides");
-        }
-
-        if ((flags & CollisionFlags.Above) != 0)
-        {
-            Debug.Log("Collided above");
-        }
-
-        if ((flags & CollisionFlags.Below) != 0)
-        {
-            Debug.Log("Collided below");
-        }
     }
 }
