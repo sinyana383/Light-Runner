@@ -42,8 +42,7 @@ public class SwipeController : MonoBehaviour
             }
         }
         #endregion
-
-        //Просчитать дистанцию
+        
         swipeDelta = Vector2.zero;
         if (isDraging)
         {
@@ -52,11 +51,9 @@ public class SwipeController : MonoBehaviour
             else if (Input.GetMouseButton(0))
                 swipeDelta = (Vector2)Input.mousePosition - startTouch;
         }
-
-        //Проверка на пройденность расстояния
+        
         if (swipeDelta.magnitude > 100)
         {
-            //Определение направления
             float x = swipeDelta.x;
             float y = swipeDelta.y;
             if (Mathf.Abs(x) > Mathf.Abs(y))

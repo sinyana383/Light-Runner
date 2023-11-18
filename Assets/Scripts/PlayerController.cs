@@ -58,8 +58,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isRunning", false);
         
         Vector3 velocity = (transform.position - previousPosition) / Time.deltaTime;
-        Debug.Log($"{velocity.y} = {transform.position} - {previousPosition} / {Time.deltaTime}");
-        Debug.Log($"{velocity.y} = {isJumping}");
         previousPosition = transform.position;
         if (isJumping && velocity.y <= 0)
         {
