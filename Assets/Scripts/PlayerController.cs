@@ -50,7 +50,14 @@ public class PlayerController : MonoBehaviour
         else if (curLine == (int)Lines.Right)
             targetPosition += Vector3.right * distBetweenLines;
 
-        transform.position = targetPosition;
+        if (transform.position == targetPosition)
+            return;
+        Vector3 diff = targetPosition - transform.position;
+        Vector3 moveDir = diff.normalized * 25 * Time.deltaTime;
+        if (moveDir.sqrMagnitude < diff.sqrMagnitude)
+            controller.Move(moveDir);
+        else
+            controller.Move(diff);
     }
 
     private void Jump()
@@ -63,6 +70,20 @@ public class PlayerController : MonoBehaviour
     {
         direction.z = speed;
         direction.y += gravity * Time.fixedDeltaTime;
-        controller.Move(direction * Time.fixedDeltaTime);
+        var flags = controller.Move(direction * Time.fixedDeltaTime);
+        if ((flags & CollisionFlags.Sides) != 0)
+        {
+            Debug.Log("Collided with sides");
+        }
+
+        if ((flags & CollisionFlags.Above) != 0)
+        {
+            Debug.Log("Collided above");
+        }
+
+        if ((flags & CollisionFlags.Below) != 0)
+        {
+            Debug.Log("Collided below");
+        }
     }
 }

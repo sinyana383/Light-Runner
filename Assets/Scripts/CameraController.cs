@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
     void FixedUpdate()
     {
         var cameraPos = transform.position;
-        Vector3 newPosition = new Vector3(cameraPos.x, cameraPos.y, distToPlayer.z + player.position.z);
+        Vector3 newPosition = new Vector3(cameraPos.x, distToPlayer.y + player.position.y, distToPlayer.z + player.position.z);
 
         transform.position = newPosition;
     }

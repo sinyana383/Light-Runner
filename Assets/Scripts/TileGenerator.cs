@@ -74,7 +74,7 @@ public class TileGenerator : MonoBehaviour
     {
         int pos = Random.Range(-1, 1 + 1);
         
-        GameObject obstacle = Instantiate(obstaclePrefab, new Vector3(tileLength * pos, 0, posZ), transform.rotation, row.transform);
+        GameObject obstacle = Instantiate(obstaclePrefab, new Vector3(tileLength * pos, 4f, posZ), transform.rotation, row.transform);
     }
 
     private void DeleteAndDestroyTile()
