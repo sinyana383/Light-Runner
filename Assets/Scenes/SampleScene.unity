@@ -719,6 +719,7 @@ GameObject:
   - component: {fileID: 646111084}
   - component: {fileID: 646111083}
   - component: {fileID: 646111085}
+  - component: {fileID: 646111086}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -772,6 +773,27 @@ MonoBehaviour:
   player: {fileID: 332649332}
   scoreText: {fileID: 1262574948}
   score: 0
+--- !u!114 &646111086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 646111082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03b5301c0f6e5314fbcb54b843a54a50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fires:
+  - {fileID: 102942426}
+  - {fileID: 1680691938}
+  - {fileID: 1888711425}
+  - {fileID: 967957855}
+  - {fileID: 1606923594}
+  - {fileID: 1657719947}
+  noFire: {fileID: 21300000, guid: 1bd1dda3553b7334b856d01b05234c73, type: 3}
+  fire: {fileID: 21300000, guid: a6bab621b3573d344a87f249995552af, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
