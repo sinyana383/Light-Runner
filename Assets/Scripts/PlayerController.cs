@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxLightRange = 60;
 
     [SerializeField] private Material emissionMaterial;
+    public delegate void LightRangeChanged(float newRange);
+    public static event LightRangeChanged OnLightRangeChanged;
     // Start is called before the first frame update
     void Start()
     {
@@ -85,6 +87,7 @@ public class PlayerController : MonoBehaviour
         float newRange = Mathf.Clamp(targetLight.range + range, 0, maxLightRange);
         
         targetLight.range = newRange;
+        OnLightRangeChanged?.Invoke(newRange);
         if (targetLight.range == 0)
         {
             emissionMaterial.SetColor("_EmissionColor", Color.black);
