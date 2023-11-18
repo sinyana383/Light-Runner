@@ -16,9 +16,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float gravity;
-
     private int curLine = (int)Lines.Middle;
     [SerializeField] private float distBetweenLines;
+    
+    [SerializeField] private Animator animator;
+    private Vector3 previousPosition;
+    private bool isJumping = false;
+    
     
     [SerializeField] private Light targetLight;
     [SerializeField] private float maxLightRange = 60;
@@ -29,6 +33,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        previousPosition = transform.position;
         emissionMaterial.SetColor("_EmissionColor", Color.yellow);
         controller = GetComponent<CharacterController>();
     }
@@ -45,6 +50,21 @@ public class PlayerController : MonoBehaviour
         {
             if (curLine > (int)Lines.Left)
                 --curLine;
+        }
+
+        if (controller.isGrounded)
+            animator.SetBool("isRunning", true);
+        else
+            animator.SetBool("isRunning", false);
+        
+        Vector3 velocity = (transform.position - previousPosition) / Time.deltaTime;
+        Debug.Log($"{velocity.y} = {transform.position} - {previousPosition} / {Time.deltaTime}");
+        Debug.Log($"{velocity.y} = {isJumping}");
+        previousPosition = transform.position;
+        if (isJumping && velocity.y <= 0)
+        {
+            animator.SetTrigger("fall");
+            isJumping = false;
         }
 
         if (SwipeController.swipeUp)
@@ -71,7 +91,9 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
+        isJumping = true;
         direction.y = jumpHeight;
+        animator.SetTrigger("jump");
     }
 
     // Update is called once per frame
