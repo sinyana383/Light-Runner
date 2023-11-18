@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PenalsManager : MonoBehaviour
 {
-    public bool isPaused;
+    static public bool IsPaused;
     [SerializeField] private GameObject startMenu;
     
     // Start is called before the first frame update
@@ -18,14 +18,14 @@ public class PenalsManager : MonoBehaviour
     {
         penal.SetActive(true);
         Time.timeScale = 0f;
-        isPaused = true;
+        IsPaused = true;
     }
 
     public void ResumeGame(GameObject penal)
     {
         penal.SetActive(false);
         Time.timeScale = 1f;
-        isPaused = false;
+        IsPaused = false;
     }
 
     public void Restart(bool startWithMenu)
