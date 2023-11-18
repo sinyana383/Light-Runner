@@ -159,6 +159,7 @@ MonoBehaviour:
   distBetweenLines: 3
   targetLight: {fileID: 862799329}
   maxLightRange: 60
+  emissionMaterial: {fileID: 2100000, guid: 4c5077d92abfa2346b6e8f538a2b3599, type: 2}
 --- !u!4 &332649332
 Transform:
   m_ObjectHideFlags: 0
@@ -696,5 +697,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9103761767645548855, guid: d2d7c96b1e7c1a748acfcc4620c7be2a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4c5077d92abfa2346b6e8f538a2b3599, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2d7c96b1e7c1a748acfcc4620c7be2a, type: 3}

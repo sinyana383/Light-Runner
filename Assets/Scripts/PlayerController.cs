@@ -17,12 +17,15 @@ public class PlayerController : MonoBehaviour
 
     private int curLine = (int)Lines.Middle;
     [SerializeField] private float distBetweenLines;
-
+    
     [SerializeField] private Light targetLight;
     [SerializeField] private float maxLightRange = 60;
+
+    [SerializeField] private Material emissionMaterial;
     // Start is called before the first frame update
     void Start()
     {
+        emissionMaterial.SetColor("_EmissionColor", Color.yellow);
         controller = GetComponent<CharacterController>();
     }
 
@@ -75,10 +78,12 @@ public class PlayerController : MonoBehaviour
         var flags = controller.Move(direction * Time.fixedDeltaTime);
     }
 
-    public void Collect(float range)
+    public void ChangeLight(float range)
     {
         float newRange = Mathf.Clamp(targetLight.range + range, 0, maxLightRange);
-
+        
         targetLight.range = newRange;
+        if (targetLight.range == 0)
+            emissionMaterial.SetColor("_EmissionColor", Color.black);
     }
 }

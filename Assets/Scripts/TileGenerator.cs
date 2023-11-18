@@ -103,6 +103,10 @@ public class TileGenerator : MonoBehaviour
         if (obstaclePos != 1)
             Instantiate(tilesPrefabs[tileIndex], new Vector3(tileLength, 0, posZ), transform.rotation, row.transform);
 
+        if (Random.Range(0, 1f) < 0.05f)
+            Instantiate(torchPrefab, new Vector3(tileLength * Random.Range(-1, 1 + 1), 2, posZ), transform.rotation,
+                row.transform);
+
         return row;
     }
     
@@ -122,7 +126,7 @@ public class TileGenerator : MonoBehaviour
         
         var obstacle = Instantiate(upObstaclePrefab, new Vector3(tileLength * pos, 3f, posZ), transform.rotation, parent.transform);
         
-        if(Random.Range(0, 1f) < 0.1f)
+        if(Random.Range(0, 1f) < 0.05f)
             Instantiate(torchPrefab, new Vector3(tileLength * pos, 7f, posZ), transform.rotation, obstacle.transform);
 
         return pos;
