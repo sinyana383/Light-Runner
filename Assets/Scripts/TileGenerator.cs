@@ -8,7 +8,7 @@ public class TileGenerator : MonoBehaviour
     [SerializeField] private GameObject groundPrefab;
     [SerializeField] private List<GameObject> presentGrounds = new List<GameObject>();
     [SerializeField] private float tilesInGround = 50;
-    [SerializeField] private int onStartGrounds = 6;
+    [SerializeField] private int onStartGrounds = 5;
     private float spawnPos;
     
     [SerializeField] private GameObject[] tilesPrefabs;
@@ -27,10 +27,25 @@ public class TileGenerator : MonoBehaviour
         tileLength = tilesPrefabs[0].transform.localScale.z;
         
         spawnPos = -(tilesInGround * tileLength) / 2;
+        SpawnNoObstaclesGround();
         for (int i = 0; i < onStartGrounds; ++i)
         {
             SpawnGround(Random.Range(0, tilesPrefabs.Length));
         }
+    }
+
+    private void SpawnNoObstaclesGround()
+    {
+        GameObject newGround = Instantiate(groundPrefab, Vector3.forward * spawnPos, transform.rotation);
+        for (int i = 0; i < tilesInGround; i++)
+        {
+            var tilePosition = Vector3.forward * spawnPos + new Vector3(0, 0, i * tileLength);
+            
+            GameObject newRow = SpawnRaw(tilePosition.z, 0);
+            newRow.transform.SetParent(newGround.transform);
+        }
+        presentGrounds.Add(newGround);
+        spawnPos += tilesInGround * tileLength;
     }
     
     void Update()
