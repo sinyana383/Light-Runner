@@ -530,7 +530,9 @@ MonoBehaviour:
   - {fileID: 4634294585377131875, guid: 8b32b0abd1925ac439709474bf47d809, type: 3}
   tileLength: 10
   player: {fileID: 332649332}
-  obstaclePrefab: {fileID: 6050233802621827101, guid: 76d73753f4784d14ca90fa70201f5969, type: 3}
+  upObstaclePrefab: {fileID: 6050233802621827101, guid: 76d73753f4784d14ca90fa70201f5969, type: 3}
+  downStartObstaclePrefab: {fileID: 1487758698107187677, guid: 6f8756c8f7cb240428f0d0c18de0bc0c, type: 3}
+  downFinishObstaclePrefab: {fileID: 1487758698107187677, guid: 01e9e9a95a81b6b499c7781007c3bd64, type: 3}
 --- !u!4 &1893377297
 Transform:
   m_ObjectHideFlags: 0

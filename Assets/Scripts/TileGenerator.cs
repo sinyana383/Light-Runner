@@ -17,7 +17,9 @@ public class TileGenerator : MonoBehaviour
     [SerializeField] private Transform player;
     
     [SerializeField] private GameObject upObstaclePrefab;
-    [SerializeField] private GameObject downObstaclePrefab;
+    [SerializeField] private GameObject downStartObstaclePrefab;
+    [SerializeField] private GameObject downFinishObstaclePrefab;
+    [SerializeField] private int lastDownObstaclePos;
     void Start()
     {
         tileLength = tilesPrefabs[0].transform.localScale.z;
@@ -39,17 +41,36 @@ public class TileGenerator : MonoBehaviour
 
     }
 
-    // TODO: make a cycle run
+    // TODO: Optimize, if have time!!!
     private void SpawnGround(int tileIndex)
     {
         GameObject newGround = Instantiate(groundPrefab, Vector3.forward * spawnPos, transform.rotation);
         bool wasUp = false;
+        bool wasDown = false;
         int prevPosUp = -2;
+        int prevPosDown = -2;
+        GameObject newRow;
         for (int i = 0; i < tilesInGround; i++)
         {
-
             var tilePosition = Vector3.forward * spawnPos + new Vector3(0, 0, i * tileLength);
-            GameObject newRow = SpawnRaw(tilePosition.z, tileIndex);
+
+            if (Random.Range(0, 1f) < 0.2f || wasDown)
+            {
+                if (prevPosDown == -2)
+                    prevPosDown = SpawnDownObstacle(downStartObstaclePrefab, tilePosition.z, newGround);
+                else
+                    prevPosDown = SpawnDownObstacle(downFinishObstaclePrefab, tilePosition.z, newGround, prevPosDown);
+                Debug.Log(prevPosDown);
+                newRow = SpawnRaw(tilePosition.z, tileIndex, prevPosDown);
+                wasDown = !wasDown;
+                if (!wasDown)
+                {
+                    lastDownObstaclePos = prevPosDown;
+                    prevPosDown = -2;
+                }
+            }
+            else
+                newRow = SpawnRaw(tilePosition.z, tileIndex);
             
             if (Random.Range(0, 1f) < 0.2f || wasUp)
             {
@@ -66,16 +87,12 @@ public class TileGenerator : MonoBehaviour
         spawnPos += tilesInGround * tileLength;
     }
 
-    private GameObject SpawnRaw(float posZ, int tileIndex)
+    private GameObject SpawnRaw(float posZ, int tileIndex, int obstaclePos = -2)
     {
         var row = new GameObject();
-        int obstaclePos = -2;
-        
+
         row.transform.position = new Vector3(0f, 0f, posZ);
         row.transform.rotation = transform.rotation;
-
-        if (Random.Range(0, 1f) < 0.2f)
-            obstaclePos = SpawnDownObstacle(posZ, row);
 
         if (obstaclePos != 0)
             Instantiate(tilesPrefabs[tileIndex], new Vector3(0, 0, posZ), transform.rotation, row.transform);
@@ -87,11 +104,13 @@ public class TileGenerator : MonoBehaviour
         return row;
     }
     
-    private int SpawnDownObstacle(float posZ, GameObject parent, int prevPos = -2)
+    private int SpawnDownObstacle(GameObject prefab, float posZ, GameObject parent, int prevPos = -2)
     {
         int pos = prevPos < -1 || prevPos > 1? Random.Range(-1, 1 + 1) : prevPos;
-        
-        GameObject obstacle1 = Instantiate(downObstaclePrefab, new Vector3(tileLength * pos, 0f, posZ), transform.rotation, parent.transform);
+
+        if (prevPos == -2 && pos == lastDownObstaclePos)
+            pos = lastDownObstaclePos >= 0 ? -1 : 1;
+        Instantiate(prefab, new Vector3(tileLength * pos, -1f, posZ), transform.rotation, parent.transform);
         return pos;
     }
 
@@ -99,7 +118,7 @@ public class TileGenerator : MonoBehaviour
     {
         int pos = prevPos < -1 || prevPos > 1? Random.Range(-1, 1 + 1) : prevPos;
         
-        GameObject obstacle1 = Instantiate(upObstaclePrefab, new Vector3(tileLength * pos, 3f, posZ), transform.rotation, parent.transform);
+        Instantiate(upObstaclePrefab, new Vector3(tileLength * pos, 3f, posZ), transform.rotation, parent.transform);
         return pos;
     }
 
