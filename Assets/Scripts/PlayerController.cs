@@ -10,8 +10,7 @@ enum Lines
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PenalsManager penalsManager;
-    [SerializeField] private GameObject gameOverPenal;
-    
+
     private CharacterController controller;
     private Vector3 direction;
     [SerializeField] private float speed;
@@ -89,8 +88,7 @@ public class PlayerController : MonoBehaviour
         if (targetLight.range == 0)
         {
             emissionMaterial.SetColor("_EmissionColor", Color.black);
-            // print the score and save data
-            penalsManager.PauseGame(gameOverPenal);
+            penalsManager.OnGameOver();
         }
     }
 }
