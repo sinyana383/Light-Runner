@@ -106,12 +106,12 @@ public class TileGenerator : MonoBehaviour
         Instantiate(curRow[(int)Lines.Right].Key, new Vector3(tileLength, rightY, posZ), transform.rotation, row.transform);
 
         // Collectable
-        if (Random.Range(0, 1f) < 0.1f)
+        if (Random.Range(0, 1f) < 0.05f)
         {
-            int line = Random.Range((int)Lines.Left, (int)Lines.Right);
+            int line = Random.Range((int)Lines.Left, (int)Lines.Right + 1);
             float yPos = GetYByObjectTag(curRow[line].Key.tag);
-
-            Instantiate(torchPrefab, new Vector3(line * tileLength, yPos + 1f, posZ), transform.rotation, row.transform);
+            
+            Instantiate(torchPrefab, new Vector3((line - 1) * tileLength, yPos * 2 + 1f, posZ), transform.rotation, row.transform);
         }
 
         return row;
